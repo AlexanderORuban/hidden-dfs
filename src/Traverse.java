@@ -69,5 +69,49 @@ public class Traverse {
     v45.neighbors = new ArrayList<>(List.of(v23));
     v23.neighbors = new ArrayList<>(List.of());
     v67.neighbors = new ArrayList<>(List.of(v91));
+
+    System.out.println("Print out of Vertices from Vertex 3:");
+    printVertices(v3);
+
+    System.out.println("Print out Vertices of graph from Map:");
+    printVertices(graph, 3);
+  }
+
+  public static void printVertices(Map<Integer, Set<Integer>> graph, int start) {
+    printVertices(graph, start, new HashSet<Integer>());
+  }
+
+  // Graph with keys as vertices and nested set of neighbors, int as start value, and a set of visited to store the already visited vertices
+  // Check if the graph doesn't contain the key start, visited doesn't already contain start, or graph is null, if so return
+  // Print out the start value
+  // Add start to the visited set
+  // Loop over the nested set at key start in the graph map
+  // Recursive call with the graph, neighbor as the new start, and visited passed back into the method call
+  private static void printVertices(Map<Integer, Set<Integer>> graph, int start, Set<Integer> visited) {
+    if (!graph.containsKey(start) || visited.contains(start) || graph == null) return;
+
+    System.out.println(start);
+
+    visited.add(start);
+
+    for (var neighbor : graph.get(start)) {
+      printVertices(graph, neighbor, visited);
+    }
+  }
+
+  public static <T> void printVertices(Vertex<T> vertex) {
+    printVertices(vertex, new HashSet<Vertex<T>>());
+  }
+
+  private static <T> void printVertices(Vertex<T> vertex, Set<Vertex<T>> visited) {
+    if (vertex == null || visited.contains(vertex)) return;
+
+    System.out.println(vertex.data);
+
+    visited.add(vertex);
+
+    for(var neighbor : vertex.neighbors) {
+      printVertices(neighbor, visited);
+    }
   }
 }
