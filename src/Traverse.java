@@ -75,6 +75,25 @@ public class Traverse {
 
     System.out.println("Print out Vertices of graph from Map:");
     printVertices(graph, 3);
+
+    System.out.println("Print out Names of people from Graph:");
+    printGossipers(diana);
+  }
+
+  public static void printGossipers(Person person) {
+    printGossipers(person, new HashSet<Person>());
+  }
+
+  private static void printGossipers(Person person, Set<Person> visited) {
+    if (person == null || visited.contains(person)) return;
+
+    System.out.println(person.getName());
+
+    visited.add(person);
+
+    for (var confidant : person.getConfidants()) {
+      printGossipers(confidant, visited);
+    }
   }
 
   public static void printVertices(Map<Integer, Set<Integer>> graph, int start) {
